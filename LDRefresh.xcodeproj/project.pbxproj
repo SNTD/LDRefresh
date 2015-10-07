@@ -7,15 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0269D8DC1BC5097900BD344D /* TaobaoRefreshDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0269D8D91BC5097900BD344D /* TaobaoRefreshDemoController.m */; settings = {ASSET_TAGS = (); }; };
+		0269D8DD1BC5097900BD344D /* WeiboRefreshDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0269D8DB1BC5097900BD344D /* WeiboRefreshDemoController.m */; settings = {ASSET_TAGS = (); }; };
 		02E5CCDD1BC3F78900B2FE6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCDC1BC3F78900B2FE6C /* main.m */; };
 		02E5CCE01BC3F78900B2FE6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCDF1BC3F78900B2FE6C /* AppDelegate.m */; };
 		02E5CCE31BC3F78900B2FE6C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCE21BC3F78900B2FE6C /* ViewController.m */; };
 		02E5CCE61BC3F78900B2FE6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02E5CCE41BC3F78900B2FE6C /* Main.storyboard */; };
 		02E5CCE81BC3F78900B2FE6C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02E5CCE71BC3F78900B2FE6C /* Assets.xcassets */; };
 		02E5CCEB1BC3F78900B2FE6C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02E5CCE91BC3F78900B2FE6C /* LaunchScreen.storyboard */; };
+		02E5CCF81BC3FA1C00B2FE6C /* LDRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCF71BC3FA1C00B2FE6C /* LDRefreshHeaderView.m */; settings = {ASSET_TAGS = (); }; };
+		02E5CCFB1BC3FA4300B2FE6C /* LDRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCFA1BC3FA4300B2FE6C /* LDRefreshFooterView.m */; settings = {ASSET_TAGS = (); }; };
+		02E5CCFE1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCFD1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.m */; settings = {ASSET_TAGS = (); }; };
+		02E5CD001BC4009800B2FE6C /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02E5CCFF1BC4009800B2FE6C /* grayArrow@2x.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0269D8D81BC5097900BD344D /* TaobaoRefreshDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaobaoRefreshDemoController.h; sourceTree = "<group>"; };
+		0269D8D91BC5097900BD344D /* TaobaoRefreshDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaobaoRefreshDemoController.m; sourceTree = "<group>"; };
+		0269D8DA1BC5097900BD344D /* WeiboRefreshDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboRefreshDemoController.h; sourceTree = "<group>"; };
+		0269D8DB1BC5097900BD344D /* WeiboRefreshDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboRefreshDemoController.m; sourceTree = "<group>"; };
 		02E5CCD81BC3F78900B2FE6C /* LDRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LDRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E5CCDC1BC3F78900B2FE6C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		02E5CCDE1BC3F78900B2FE6C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +36,13 @@
 		02E5CCE71BC3F78900B2FE6C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02E5CCEA1BC3F78900B2FE6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02E5CCEC1BC3F78900B2FE6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02E5CCF61BC3FA1C00B2FE6C /* LDRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDRefreshHeaderView.h; sourceTree = "<group>"; };
+		02E5CCF71BC3FA1C00B2FE6C /* LDRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRefreshHeaderView.m; sourceTree = "<group>"; };
+		02E5CCF91BC3FA4300B2FE6C /* LDRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDRefreshFooterView.h; sourceTree = "<group>"; };
+		02E5CCFA1BC3FA4300B2FE6C /* LDRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDRefreshFooterView.m; sourceTree = "<group>"; };
+		02E5CCFC1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+LDRefresh.h"; sourceTree = "<group>"; };
+		02E5CCFD1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+LDRefresh.m"; sourceTree = "<group>"; };
+		02E5CCFF1BC4009800B2FE6C /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +56,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0269D8D71BC5097900BD344D /* DemoController */ = {
+			isa = PBXGroup;
+			children = (
+				0269D8DA1BC5097900BD344D /* WeiboRefreshDemoController.h */,
+				0269D8DB1BC5097900BD344D /* WeiboRefreshDemoController.m */,
+				0269D8D81BC5097900BD344D /* TaobaoRefreshDemoController.h */,
+				0269D8D91BC5097900BD344D /* TaobaoRefreshDemoController.m */,
+			);
+			path = DemoController;
+			sourceTree = "<group>";
+		};
 		02E5CCCF1BC3F78900B2FE6C = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +86,8 @@
 		02E5CCDA1BC3F78900B2FE6C /* LDRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				02E5CCF51BC3F9F300B2FE6C /* LDRefresh */,
+				0269D8D71BC5097900BD344D /* DemoController */,
 				02E5CCDE1BC3F78900B2FE6C /* AppDelegate.h */,
 				02E5CCDF1BC3F78900B2FE6C /* AppDelegate.m */,
 				02E5CCE11BC3F78900B2FE6C /* ViewController.h */,
@@ -77,6 +107,20 @@
 				02E5CCDC1BC3F78900B2FE6C /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		02E5CCF51BC3F9F300B2FE6C /* LDRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				02E5CCFF1BC4009800B2FE6C /* grayArrow@2x.png */,
+				02E5CCF61BC3FA1C00B2FE6C /* LDRefreshHeaderView.h */,
+				02E5CCF71BC3FA1C00B2FE6C /* LDRefreshHeaderView.m */,
+				02E5CCF91BC3FA4300B2FE6C /* LDRefreshFooterView.h */,
+				02E5CCFA1BC3FA4300B2FE6C /* LDRefreshFooterView.m */,
+				02E5CCFC1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.h */,
+				02E5CCFD1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.m */,
+			);
+			path = LDRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +183,7 @@
 				02E5CCEB1BC3F78900B2FE6C /* LaunchScreen.storyboard in Resources */,
 				02E5CCE81BC3F78900B2FE6C /* Assets.xcassets in Resources */,
 				02E5CCE61BC3F78900B2FE6C /* Main.storyboard in Resources */,
+				02E5CD001BC4009800B2FE6C /* grayArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +194,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02E5CCF81BC3FA1C00B2FE6C /* LDRefreshHeaderView.m in Sources */,
 				02E5CCE31BC3F78900B2FE6C /* ViewController.m in Sources */,
+				0269D8DC1BC5097900BD344D /* TaobaoRefreshDemoController.m in Sources */,
+				02E5CCFB1BC3FA4300B2FE6C /* LDRefreshFooterView.m in Sources */,
+				0269D8DD1BC5097900BD344D /* WeiboRefreshDemoController.m in Sources */,
+				02E5CCFE1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.m in Sources */,
 				02E5CCE01BC3F78900B2FE6C /* AppDelegate.m in Sources */,
 				02E5CCDD1BC3F78900B2FE6C /* main.m in Sources */,
 			);
@@ -298,6 +348,7 @@
 				02E5CCF11BC3F78900B2FE6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

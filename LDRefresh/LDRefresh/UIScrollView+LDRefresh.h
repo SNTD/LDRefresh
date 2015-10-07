@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class LDRefreshHeaderView;
+@class LDRefreshFooterView;
+
+typedef void(^LDRefreshedHandler)(void);
 @interface UIScrollView (LDRefresh)
+
+- (LDRefreshHeaderView *)addHeaderWithRefreshHandler:(LDRefreshedHandler)refreshHandler;
+- (LDRefreshFooterView *)addFooterWithRefreshHandler:(LDRefreshedHandler)refreshHandler;
 
 @end
