@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, LDRefreshState) {
     LDRefreshStateLoading = 3,
 };
 
-const CGFloat LDFooterOffsetHeight = 60;
+const CGFloat LDRefreshFooterHeight = 60;
 
 #define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
 #define TextFont  [UIFont systemFontOfSize:12.0f]
@@ -60,10 +60,10 @@ const CGFloat LDFooterOffsetHeight = 60;
 
 - (void)drawRefreshView {
     self.backgroundColor = [UIColor clearColor];
-    self.frame = CGRectMake(0, 0, ScreenWidth, LDFooterOffsetHeight);
+    self.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
     
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.frame = CGRectMake(0, 0, ScreenWidth, LDFooterOffsetHeight);
+    _statusLabel.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
     _statusLabel.font = TextFont;
     _statusLabel.textColor = TextColor;
     _statusLabel.backgroundColor = [UIColor clearColor];
@@ -136,7 +136,7 @@ const CGFloat LDFooterOffsetHeight = 60;
     
     else {
         if (self.scrollView.isDragging) {
-            if (self.dragHeight < LDFooterOffsetHeight) {
+            if (self.dragHeight < LDRefreshFooterHeight) {
                 self.refreshState = LDRefreshStateNormal;
             }else {
                 self.refreshState = LDRefreshStatePulling;
@@ -206,9 +206,9 @@ const CGFloat LDFooterOffsetHeight = 60;
                     [UIView animateWithDuration:0.3 animations:^{
                         
                         UIEdgeInsets inset = self.scrollView.contentInset;
-                        inset.bottom += LDFooterOffsetHeight;
+                        inset.bottom += LDRefreshFooterHeight;
                         self.scrollView.contentInset = inset;
-                        inset.bottom = self.frame.origin.y - self.scrollView.contentSize.height + LDFooterOffsetHeight;
+                        inset.bottom = self.frame.origin.y - self.scrollView.contentSize.height + LDRefreshFooterHeight;
                         self.scrollView.contentInset = inset;
                         
                     }];

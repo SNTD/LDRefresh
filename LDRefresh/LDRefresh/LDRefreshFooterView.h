@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-extern const CGFloat LDFooterOffsetHeight;
+extern const CGFloat LDRefreshFooterHeight;
 
 typedef void(^LDRefreshedHandler)(void);
 @interface LDRefreshFooterView : UIView

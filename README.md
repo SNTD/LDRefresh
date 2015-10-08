@@ -6,6 +6,10 @@ GitHub 上下拉刷新项目代码已不少，为何还写LDRefresh呢？
 
 2.集成京东商品详情页上下拉切换:一直想实现下这个效果，此次将此功能集成了进来！
 
+### 效果演示
+
+![](https://github.com/sntd/LDRefresh/raw/master/Picture/LDRefresh.gif)
+
 ### Demo说明
 
 1.微博Demo:
@@ -17,11 +21,6 @@ GitHub 上下拉刷新项目代码已不少，为何还写LDRefresh呢？
 2.京东Demo:
 
  (一)淘宝商品详情页，知乎回答上下拉切换 都类似此效果
-
-### 效果演示
-
-![](https://github.com/sntd/LDRefresh/raw/master/Picture/LDRefresh.gif)
-
 
 
 ### 功能说明:

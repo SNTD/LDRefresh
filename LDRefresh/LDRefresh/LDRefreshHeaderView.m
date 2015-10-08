@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger, LDRefreshState) {
     LDRefreshStateLoading = 3,
 };
 
-const CGFloat LDHeaderOffsetHeight = 60;
+const CGFloat LDRfreshHeaderHeight = 60;
 
 #define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
 #define TextFont  [UIFont systemFontOfSize:12.0f]
@@ -61,10 +61,10 @@ const CGFloat LDHeaderOffsetHeight = 60;
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     
     self.backgroundColor = [UIColor clearColor];
-    self.frame = CGRectMake(0, -LDHeaderOffsetHeight, screenWidth, LDHeaderOffsetHeight);
+    self.frame = CGRectMake(0, -LDRfreshHeaderHeight, screenWidth, LDRfreshHeaderHeight);
     
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.frame = CGRectMake(0, 0, screenWidth, LDHeaderOffsetHeight);
+    _statusLabel.frame = CGRectMake(0, 0, screenWidth, LDRfreshHeaderHeight);
     _statusLabel.font = TextFont;
     _statusLabel.textColor = TextColor;
     _statusLabel.backgroundColor = [UIColor clearColor];
@@ -115,7 +115,7 @@ const CGFloat LDHeaderOffsetHeight = 60;
     }
     
     if (self.scrollView.isDragging) {
-        if (self.dragHeight < LDHeaderOffsetHeight) {
+        if (self.dragHeight < LDRfreshHeaderHeight) {
             self.refreshState = LDRefreshStateNormal;
         }else {
             self.refreshState = LDRefreshStatePulling;
@@ -169,7 +169,7 @@ const CGFloat LDHeaderOffsetHeight = 60;
                     
                     [UIView animateWithDuration:0.3 animations:^{
                         UIEdgeInsets edgeInset = _initEdgeInset;
-                        edgeInset.top += LDHeaderOffsetHeight;
+                        edgeInset.top += LDRfreshHeaderHeight;
                         self.scrollView.contentInset = edgeInset;
                     }];
                 }

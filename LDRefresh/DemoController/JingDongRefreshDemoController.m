@@ -49,7 +49,7 @@
         [self.view addSubview:tableView];
 
         tableView.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64);
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, LDFooterOffsetHeight, 0);
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, LDRefreshFooterHeight, 0);
         tableView;
     });
     

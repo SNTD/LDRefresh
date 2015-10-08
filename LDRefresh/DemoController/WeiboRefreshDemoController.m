@@ -28,7 +28,7 @@
     {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    self.title = @"微博上下拉加载";
+    self.title = @"微博5.4.0";
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.height, [UIScreen mainScreen].bounds.size.height - 64)];
     _tableView.delegate = (id<UITableViewDelegate>)self;
