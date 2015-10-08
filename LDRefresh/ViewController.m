@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "WeiboRefreshDemoController.h"
-#import "TaobaoRefreshDemoController.h"
+#import "JingDongRefreshDemoController.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) NSArray *dataArray;
@@ -25,8 +25,6 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.height, [UIScreen mainScreen].bounds.size.height - 64)];
     tableView.delegate = (id<UITableViewDelegate>)self;
     tableView.dataSource = (id<UITableViewDataSource>)self;
-//    tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    tableView.rowHeight = 44;
     [self.view addSubview:tableView];
     
     _dataArray = @[@"仿微博5.4.0上下拉加载",@"仿京东商品详情上下拉切换页面"];
@@ -56,7 +54,7 @@
         [self.navigationController pushViewController:ctr animated:YES];
     }
     else {
-        TaobaoRefreshDemoController *ctr = [[TaobaoRefreshDemoController alloc] init];
+        JingDongRefreshDemoController *ctr = [[JingDongRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
 }

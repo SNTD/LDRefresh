@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0269D8DC1BC5097900BD344D /* TaobaoRefreshDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0269D8D91BC5097900BD344D /* TaobaoRefreshDemoController.m */; settings = {ASSET_TAGS = (); }; };
+		0269D8DC1BC5097900BD344D /* JingDongRefreshDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0269D8D91BC5097900BD344D /* JingDongRefreshDemoController.m */; settings = {ASSET_TAGS = (); }; };
 		0269D8DD1BC5097900BD344D /* WeiboRefreshDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0269D8DB1BC5097900BD344D /* WeiboRefreshDemoController.m */; settings = {ASSET_TAGS = (); }; };
 		02E5CCDD1BC3F78900B2FE6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCDC1BC3F78900B2FE6C /* main.m */; };
 		02E5CCE01BC3F78900B2FE6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E5CCDF1BC3F78900B2FE6C /* AppDelegate.m */; };
@@ -22,8 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0269D8D81BC5097900BD344D /* TaobaoRefreshDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaobaoRefreshDemoController.h; sourceTree = "<group>"; };
-		0269D8D91BC5097900BD344D /* TaobaoRefreshDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaobaoRefreshDemoController.m; sourceTree = "<group>"; };
+		0269D8D81BC5097900BD344D /* JingDongRefreshDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JingDongRefreshDemoController.h; sourceTree = "<group>"; };
+		0269D8D91BC5097900BD344D /* JingDongRefreshDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JingDongRefreshDemoController.m; sourceTree = "<group>"; };
 		0269D8DA1BC5097900BD344D /* WeiboRefreshDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboRefreshDemoController.h; sourceTree = "<group>"; };
 		0269D8DB1BC5097900BD344D /* WeiboRefreshDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboRefreshDemoController.m; sourceTree = "<group>"; };
 		02E5CCD81BC3F78900B2FE6C /* LDRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LDRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,8 +61,8 @@
 			children = (
 				0269D8DA1BC5097900BD344D /* WeiboRefreshDemoController.h */,
 				0269D8DB1BC5097900BD344D /* WeiboRefreshDemoController.m */,
-				0269D8D81BC5097900BD344D /* TaobaoRefreshDemoController.h */,
-				0269D8D91BC5097900BD344D /* TaobaoRefreshDemoController.m */,
+				0269D8D81BC5097900BD344D /* JingDongRefreshDemoController.h */,
+				0269D8D91BC5097900BD344D /* JingDongRefreshDemoController.m */,
 			);
 			path = DemoController;
 			sourceTree = "<group>";
@@ -196,7 +196,7 @@
 			files = (
 				02E5CCF81BC3FA1C00B2FE6C /* LDRefreshHeaderView.m in Sources */,
 				02E5CCE31BC3F78900B2FE6C /* ViewController.m in Sources */,
-				0269D8DC1BC5097900BD344D /* TaobaoRefreshDemoController.m in Sources */,
+				0269D8DC1BC5097900BD344D /* JingDongRefreshDemoController.m in Sources */,
 				02E5CCFB1BC3FA4300B2FE6C /* LDRefreshFooterView.m in Sources */,
 				0269D8DD1BC5097900BD344D /* WeiboRefreshDemoController.m in Sources */,
 				02E5CCFE1BC3FA8400B2FE6C /* UIScrollView+LDRefresh.m in Sources */,

@@ -14,7 +14,12 @@
 typedef void(^LDRefreshedHandler)(void);
 @interface UIScrollView (LDRefresh)
 
-- (LDRefreshHeaderView *)addHeaderWithRefreshHandler:(LDRefreshedHandler)refreshHandler;
-- (LDRefreshFooterView *)addFooterWithRefreshHandler:(LDRefreshedHandler)refreshHandler;
+//header
+@property (strong, nonatomic) LDRefreshHeaderView *refreshHeader;
+- (LDRefreshHeaderView *)addRefreshHeaderWithHandler:(LDRefreshedHandler)refreshHandler;
+
+//footer
+@property (strong, nonatomic) LDRefreshFooterView *refreshFooter;
+- (LDRefreshFooterView *)addRefreshFooterWithHandler:(LDRefreshedHandler)refreshHandler;
 
 @end

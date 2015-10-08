@@ -6,7 +6,7 @@
 //  Copyright © 2015 lidi. All rights reserved.
 //
 
-#import "TaobaoRefreshDemoController.h"
+#import "JingDongRefreshDemoController.h"
 #import "LDRefreshFooterView.h"
 #import "LDRefreshHeaderView.h"
 #import "UIScrollView+LDRefresh.h"
@@ -17,17 +17,16 @@
 #define FirstTableColor [UIColor colorWithRed:119/255.0 green:210/255.0 blue:197/255.0 alpha:1.0]
 #define SecondTableColor [UIColor colorWithRed:30/255.0 green:171/255.0 blue:201/255.0 alpha:1.0]
 
-@interface TaobaoRefreshDemoController ()
+@interface JingDongRefreshDemoController ()
 //UI
 @property (nonatomic, strong)   UITableView *firstTableView;
 @property (nonatomic, strong)   UITableView *secondTableView;
-@property (nonatomic, strong)   LDRefreshHeaderView *headerView;
-@property (nonatomic, strong)   LDRefreshFooterView *footerView;
+
 //Data
 @property (nonatomic, assign) NSInteger data;
 @end
 
-@implementation TaobaoRefreshDemoController
+@implementation JingDongRefreshDemoController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,6 +45,7 @@
         tableView.delegate = (id<UITableViewDelegate>)self;
         tableView.dataSource = (id<UITableViewDataSource>)self;
         tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
 
         tableView.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64);
@@ -59,6 +59,7 @@
         tableView.delegate = (id<UITableViewDelegate>)self;
         tableView.dataSource = (id<UITableViewDataSource>)self;
         tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
         
         tableView.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight - 64);
@@ -73,21 +74,21 @@
 - (void)addRefresh {
     //_footerView
     __weak __typeof(self)weakSelf = self;
-    _footerView = [self.firstTableView addFooterWithRefreshHandler:^{
+    self.firstTableView.refreshFooter = [self.firstTableView addRefreshFooterWithHandler:^{
         [weakSelf loadMoreData];
     }];
-    _footerView.autoLoadMore = NO;
+    self.firstTableView.refreshFooter.autoLoadMore = NO;
     
     NSDictionary *upDic = @{
                             @"normalText" : @"上拉查看图文详情",
                             @"pullingText" : @"上拉查看图文详情",
                             @"loadingText" : @"上拉查看图文详情"
                             };
-    [_footerView setValue:upDic forKey:@"stateTextDic"];
-    [_footerView setValue:@NO forKey:@"needLoadingAnimation"];
+    [self.firstTableView.refreshFooter setValue:upDic forKey:@"stateTextDic"];
+    [self.firstTableView.refreshFooter setValue:@NO forKey:@"needLoadingAnimation"];
     
     //_headerView
-    _headerView = [self.secondTableView addHeaderWithRefreshHandler:^{
+    self.secondTableView.refreshHeader = [self.secondTableView addRefreshHeaderWithHandler:^{
         [weakSelf refreshData];
     }];
 
@@ -96,8 +97,8 @@
                               @"pullingText" : @"释放回到商品详情",
                               @"loadingText" : @"释放回到商品详情"
                               };
-    [_headerView setValue:downDic forKey:@"stateTextDic"];
-    [_headerView setValue:@NO forKey:@"needLoadingAnimation"];
+    [self.secondTableView.refreshHeader setValue:downDic forKey:@"stateTextDic"];
+    [self.secondTableView.refreshHeader setValue:@NO forKey:@"needLoadingAnimation"];
 }
 
 - (void)refreshData {
@@ -112,7 +113,7 @@
         weakSelf.secondTableView.frame = frame;
     } completion:^(BOOL finished) {
         weakSelf.title = @"FirstTableView";
-        [_headerView endRefresh];
+        [weakSelf.secondTableView.refreshHeader endRefresh];
     }];
 
 }
@@ -129,7 +130,7 @@
         weakSelf.secondTableView.frame = frame;
     } completion:^(BOOL finished) {
         weakSelf.title = @"SecondTableView";
-        [_footerView endRefresh];
+        [weakSelf.firstTableView.refreshFooter endRefresh];
     }];
 }
 
@@ -151,6 +152,7 @@
     }else {
         cell.backgroundColor = SecondTableColor;
     }
+    
     cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
     return cell;
 }

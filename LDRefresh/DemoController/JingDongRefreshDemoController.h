@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TaobaoRefreshDemoController : UIViewController
+@interface JingDongRefreshDemoController : UIViewController
 
 @end

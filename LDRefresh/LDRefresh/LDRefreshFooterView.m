@@ -43,7 +43,7 @@ const CGFloat LDFooterOffsetHeight = 60;
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
 }
 
-+ (instancetype)footerWithRefreshHandler:(LDRefreshedHandler)refreshHandler {
++ (instancetype)refreshFooterWithHandler:(LDRefreshedHandler)refreshHandler {
     LDRefreshFooterView *footer = [[LDRefreshFooterView alloc] init];
     footer.refreshHandler = refreshHandler;
     return footer;

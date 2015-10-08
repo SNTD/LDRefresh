@@ -41,7 +41,7 @@ const CGFloat LDHeaderOffsetHeight = 60;
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
-+ (instancetype)headerWithRefreshHandler:(LDRefreshedHandler)refreshHandler {
++ (instancetype)refreshHeaderWithHandler:(LDRefreshedHandler)refreshHandler {
     LDRefreshHeaderView *header = [[LDRefreshHeaderView alloc] init];
     header.refreshHandler = refreshHandler;
     return header;

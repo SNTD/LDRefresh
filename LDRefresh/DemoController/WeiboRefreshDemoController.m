@@ -14,8 +14,7 @@
 @interface WeiboRefreshDemoController ()
 //UI
 @property (nonatomic, strong)   UITableView *tableView;
-@property (nonatomic, strong)   LDRefreshHeaderView *headerView;
-@property (nonatomic, strong)   LDRefreshFooterView *footerView;
+
 //Data
 @property (nonatomic, assign) NSInteger data;
 @end
@@ -44,20 +43,20 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [_headerView startRefresh];
+    [_tableView.refreshHeader startRefresh];
 }
 
 - (void)addRefreshView {
     
     __weak __typeof(self)weakSelf = self;
-    
+
     //下拉刷新
-    _headerView = [_tableView addHeaderWithRefreshHandler:^ {
+    _tableView.refreshHeader = [_tableView addRefreshHeaderWithHandler:^ {
         [weakSelf refreshData];
     }];
     
     //上拉加载更多
-    _footerView = [_tableView addFooterWithRefreshHandler:^ {
+    _tableView.refreshFooter = [_tableView addRefreshFooterWithHandler:^ {
         [weakSelf loadMoreData];
     }];
 //    _footerView.autoLoadMore = NO;
@@ -69,9 +68,9 @@
         
         _data = 20;
         [weakSelf.tableView reloadData];
-        [weakSelf.headerView endRefresh];
+        [weakSelf.tableView.refreshHeader endRefresh];
         
-        weakSelf.footerView.loadMoreEnabled = YES;
+        weakSelf.tableView.refreshFooter.loadMoreEnabled = YES;
     });
 }
 
@@ -81,9 +80,9 @@
         
         _data += 20;
         [weakSelf.tableView reloadData];
-        [weakSelf.footerView endRefresh];
+        [weakSelf.tableView.refreshFooter endRefresh];
         
-        weakSelf.footerView.loadMoreEnabled = NO;
+        weakSelf.tableView.refreshFooter.loadMoreEnabled = NO;
     });
 }
 
