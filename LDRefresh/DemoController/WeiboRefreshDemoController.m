@@ -48,7 +48,7 @@
 
 - (void)addRefreshView {
     
-    __weak __typeof(self)weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
 
     //下拉刷新
     _tableView.refreshHeader = [_tableView addRefreshHeaderWithHandler:^ {
