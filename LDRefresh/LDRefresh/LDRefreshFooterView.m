@@ -161,63 +161,54 @@ const CGFloat LDRefreshFooterHeight = 60;
 }
 
 - (void)setRefreshState:(LDRefreshState)refreshState {
-    LDRefreshState lastRefreshState = _refreshState;
-    
     if (_refreshState != refreshState) {
         _refreshState = refreshState;
         
-        switch (refreshState) {
-            case LDRefreshStateNormal:
-            {
-                _statusLabel.text = self.stateTextDic[@"normalText"];
-                if (lastRefreshState == LDRefreshStateLoading) {
-                    _arrowImage.hidden = YES;
-                } else {
-                    _arrowImage.hidden = NO;
-                }
-                _arrowImage.hidden = NO;
-                
-                [_activityView stopAnimating];
+        //refreshText
+        [self refreshStatusText];
+        
+        //refreshAnimation
+        [self refreshStatusAnimation];
+    }
+}
+
+- (void)refreshStatusAnimation {
+    switch (_refreshState) {
+        case LDRefreshStateNormal:
+        {
+            _arrowImage.hidden = NO;
+            [_activityView stopAnimating];
+            [UIView animateWithDuration:0.3 animations:^{
+                _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+                self.scrollView.contentInset = _initEdgeInset;
+            }];
+            break;
+        }
+        case LDRefreshStatePulling:
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                _arrowImage.transform = CGAffineTransformIdentity;
+            }];
+            break;
+        }
+        case LDRefreshStateLoading:
+        {
+            if (self.needLoadingAnimation) {
+                _arrowImage.hidden = YES;
+                _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+                [_activityView startAnimating];
                 
                 [UIView animateWithDuration:0.3 animations:^{
-                    _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-                    self.scrollView.contentInset = _initEdgeInset;
+                    UIEdgeInsets inset = self.scrollView.contentInset;
+                    inset.bottom += LDRefreshFooterHeight;
+                    self.scrollView.contentInset = inset;
                 }];
-                break;
             }
-            case LDRefreshStatePulling:
-            {
-                _statusLabel.text = self.stateTextDic[@"pullingText"];
-                
-                [UIView animateWithDuration:0.3 animations:^{
-                    _arrowImage.transform = CGAffineTransformIdentity;
-                }];
-                break;
+            
+            if (self.refreshHandler) {
+                self.refreshHandler();
             }
-            case LDRefreshStateLoading:
-            {
-                if (self.needLoadingAnimation) {
-                    _statusLabel.text = self.stateTextDic[@"loadingText"];
-                    [_activityView startAnimating];
-                    _arrowImage.hidden = YES;
-                    _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-                    
-                    [UIView animateWithDuration:0.3 animations:^{
-                        
-                        UIEdgeInsets inset = self.scrollView.contentInset;
-                        inset.bottom += LDRefreshFooterHeight;
-                        self.scrollView.contentInset = inset;
-                        inset.bottom = self.frame.origin.y - self.scrollView.contentSize.height + LDRefreshFooterHeight;
-                        self.scrollView.contentInset = inset;
-                        
-                    }];
-                }
-                
-                if (self.refreshHandler) {
-                    self.refreshHandler();
-                }
-                break;
-            }
+            break;
         }
     }
 }
@@ -280,10 +271,10 @@ const CGFloat LDRefreshFooterHeight = 60;
 - (void)setStateTextDic:(NSDictionary *)stateTextDic {
     _stateTextDic = stateTextDic;
     
-    [self refreshStatusLabel];
+    [self refreshStatusText];
 }
 
-- (void)refreshStatusLabel {
+- (void)refreshStatusText {
     switch (_refreshState) {
         case LDRefreshStateNormal: {
             _statusLabel.text = self.stateTextDic[@"normalText"];

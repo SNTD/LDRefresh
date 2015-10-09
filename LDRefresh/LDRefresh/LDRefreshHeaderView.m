@@ -118,7 +118,8 @@ const CGFloat LDRfreshHeaderHeight = 60;
         }else {
             self.refreshState = LDRefreshStatePulling;
         }
-    } else {
+    }
+    else {
         if (self.refreshState == LDRefreshStatePulling) {
             self.refreshState = LDRefreshStateLoading;
         }
@@ -133,50 +134,52 @@ const CGFloat LDRfreshHeaderHeight = 60;
     if (_refreshState != refreshState) {
         _refreshState = refreshState;
         
-        switch (refreshState) {
-            case LDRefreshStateNormal: {
-                _statusLabel.text = self.stateTextDic[@"normalText"];
-                _arrowImage.hidden = NO;
-                [_activityView stopAnimating];
-                
+        //refreshText
+        [self refreshStatusText];
+        
+        //refreshAnimation
+        [self refreshStatusAnimation];
+    }
+}
+
+- (void)refreshStatusAnimation {
+    switch (_refreshState) {
+        case LDRefreshStateNormal: {
+            
+            _arrowImage.hidden = NO;
+            [_activityView stopAnimating];
+            [UIView animateWithDuration:0.3 animations:^{
+                _arrowImage.transform = CGAffineTransformIdentity;
+                self.scrollView.contentInset = _initEdgeInset;
+            }];
+            break;
+        }
+            
+        case LDRefreshStatePulling: {
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+            }];
+            break;
+        }
+            
+        case LDRefreshStateLoading: {
+            
+            if (self.needLoadingAnimation) {
+                _arrowImage.hidden = YES;
+                _arrowImage.transform = CGAffineTransformIdentity;
+                [_activityView startAnimating];
                 [UIView animateWithDuration:0.3 animations:^{
-                    _arrowImage.transform = CGAffineTransformIdentity;
-                    self.scrollView.contentInset = _initEdgeInset;
+                    UIEdgeInsets inset = _initEdgeInset;
+                    inset.top += LDRfreshHeaderHeight;
+                    self.scrollView.contentInset = inset;
                 }];
-                break;
             }
-                
-            case LDRefreshStatePulling: {
-                _statusLabel.text = self.stateTextDic[@"pullingText"];
-                
-                [UIView animateWithDuration:0.3 animations:^{
-                    _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-                }];
-                
-                break;
-                
+            
+            if (self.refreshHandler) {
+                self.refreshHandler();
             }
-                
-            case LDRefreshStateLoading: {
-                if (self.needLoadingAnimation) {
-                    _statusLabel.text = self.stateTextDic[@"loadingText"];
-                    
-                    [_activityView startAnimating];
-                    _arrowImage.hidden = YES;
-                    _arrowImage.transform = CGAffineTransformIdentity;
-                    
-                    [UIView animateWithDuration:0.3 animations:^{
-                        UIEdgeInsets edgeInset = _initEdgeInset;
-                        edgeInset.top += LDRfreshHeaderHeight;
-                        self.scrollView.contentInset = edgeInset;
-                    }];
-                }
-                
-                if (self.refreshHandler) {
-                    self.refreshHandler();
-                }
-                break;
-            }
+            break;
         }
     }
 }
@@ -205,10 +208,10 @@ const CGFloat LDRfreshHeaderHeight = 60;
 - (void)setStateTextDic:(NSDictionary *)stateTextDic {
     _stateTextDic = stateTextDic;
     
-    [self refreshStatusLabel];
+    [self refreshStatusText];
 }
 
-- (void)refreshStatusLabel {
+- (void)refreshStatusText {
     switch (_refreshState) {
         case LDRefreshStateNormal: {
             _statusLabel.text = self.stateTextDic[@"normalText"];
