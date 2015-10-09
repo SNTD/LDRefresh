@@ -27,7 +27,7 @@
     tableView.dataSource = (id<UITableViewDataSource>)self;
     [self.view addSubview:tableView];
     
-    _dataArray = @[@"仿微博5.4.0上下拉加载",@"仿京东商品详情上下拉切换页面"];
+    _dataArray = @[@"仿京东商品详情上下拉切换页面", @"仿微博5.4.0上下拉加载"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -50,11 +50,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     if (indexPath.row == 0) {
-        WeiboRefreshDemoController *ctr = [[WeiboRefreshDemoController alloc] init];
+        JingDongRefreshDemoController *ctr = [[JingDongRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
     else {
-        JingDongRefreshDemoController *ctr = [[JingDongRefreshDemoController alloc] init];
+        WeiboRefreshDemoController *ctr = [[WeiboRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
 }

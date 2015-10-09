@@ -70,9 +70,8 @@ const CGFloat LDRefreshFooterHeight = 60;
     _statusLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_statusLabel];
     
-    //orgin.y=10 special adapt
-    _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayArrow"]];
-    _arrowImage.frame = CGRectMake(ScreenWidth/2.0 - 50, 10, 15, 40);
+    _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
+    _arrowImage.frame = CGRectMake(ScreenWidth/2.0 - 60,(LDRefreshFooterHeight-32)/2.0, 32, 32);
     [self addSubview:_arrowImage];
     
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

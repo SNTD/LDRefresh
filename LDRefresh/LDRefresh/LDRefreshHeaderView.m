@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, LDRefreshState) {
 
 const CGFloat LDRfreshHeaderHeight = 60;
 
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
 #define TextFont  [UIFont systemFontOfSize:12.0f]
 
@@ -58,22 +59,19 @@ const CGFloat LDRfreshHeaderHeight = 60;
 }
 
 - (void)drawRefreshView {
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    
     self.backgroundColor = [UIColor clearColor];
-    self.frame = CGRectMake(0, -LDRfreshHeaderHeight, screenWidth, LDRfreshHeaderHeight);
+    self.frame = CGRectMake(0, -LDRfreshHeaderHeight, ScreenWidth, LDRfreshHeaderHeight);
     
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.frame = CGRectMake(0, 0, screenWidth, LDRfreshHeaderHeight);
+    _statusLabel.frame = CGRectMake(0, 0, ScreenWidth, LDRfreshHeaderHeight);
     _statusLabel.font = TextFont;
     _statusLabel.textColor = TextColor;
     _statusLabel.backgroundColor = [UIColor clearColor];
     _statusLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_statusLabel];
     
-    //orgin.y=10 special adapt
-    _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"grayArrow"]];
-    _arrowImage.frame = CGRectMake(screenWidth/2.0 - 50, 10, 15, 40);
+    _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
+    _arrowImage.frame = CGRectMake(ScreenWidth/2.0 - 60,(LDRfreshHeaderHeight-32)/2.0, 32, 32);
     [self addSubview:_arrowImage];
     
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
