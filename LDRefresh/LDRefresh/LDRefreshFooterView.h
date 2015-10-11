@@ -16,6 +16,7 @@ typedef void(^LDRefreshedHandler)(void);
 @property (nonatomic, assign) BOOL autoLoadMore;//default YES
 @property (nonatomic, assign) BOOL loadMoreEnabled; //default YES
 
-- (void)endRefresh;
+@property (nonatomic, assign) CGFloat dragHeight;
 
+- (void)endRefresh;
 @end

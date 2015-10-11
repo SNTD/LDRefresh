@@ -115,6 +115,11 @@ const CGFloat LDRefreshHeaderHeight = 60;
         if (self.refreshState == LDRefreshStatePulling) {
             self.refreshState = LDRefreshStateLoading;
         }
+        else {
+            if (self.dragHeight < self.dragHeightThreshold) {
+                self.refreshState = LDRefreshStateNormal;
+            }
+        }
     }
 }
 
@@ -127,28 +132,26 @@ const CGFloat LDRefreshHeaderHeight = 60;
 }
 
 - (void)setRefreshState:(LDRefreshState)refreshState {
-    if (_refreshState != refreshState) {
-        _refreshState = refreshState;
+    _refreshState = refreshState;
 
-        switch (_refreshState) {
-            case LDRefreshStateNormal: {
-                [self normalAnimation];
-                break;
+    switch (_refreshState) {
+        case LDRefreshStateNormal: {
+            [self normalAnimation];
+            break;
+        }
+            
+        case LDRefreshStatePulling: {
+            [self pullingAnimation];
+            break;
+        }
+            
+        case LDRefreshStateLoading: {
+            [self loadingAnimation];
+            
+            if (self.refreshHandler) {
+                self.refreshHandler();
             }
-                
-            case LDRefreshStatePulling: {
-                [self pullingAnimation];
-                break;
-            }
-                
-            case LDRefreshStateLoading: {
-                [self loadingAnimation];
-                
-                if (self.refreshHandler) {
-                    self.refreshHandler();
-                }
-                break;
-            }
+            break;
         }
     }
 }

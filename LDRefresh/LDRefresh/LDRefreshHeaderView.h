@@ -12,9 +12,9 @@ extern const CGFloat LDRefreshHeaderHeight;
 
 typedef void(^LDRefreshedHandler)(void);
 @interface LDRefreshHeaderView : UIView
+@property (nonatomic, assign) CGFloat dragHeight;
 
 - (void)startRefresh;
 - (void)endRefresh;
-
 @end
 

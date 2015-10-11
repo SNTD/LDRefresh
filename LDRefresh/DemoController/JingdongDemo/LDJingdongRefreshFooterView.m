@@ -7,6 +7,8 @@
 //
 
 #import "LDJingdongRefreshFooterView.h"
+#import <objc/message.h>
+
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
 #define TextFont  [UIFont systemFontOfSize:12.0f]
@@ -18,9 +20,9 @@
 @implementation LDJingdongRefreshFooterView
 
 - (NSDictionary *)stateTextDic{
-    return @{@"normalText" : @"下拉查看商品详情",
-             @"pullingText" : @"释放查看商品详情",
-             @"loadingText" : @"释放查看商品详情"
+    return @{@"normalText" : @"上拉查看图文详情",
+             @"pullingText" : @"释放查看图文详情",
+             @"loadingText" : @"释放查看图文详情"
              };
 }
 
