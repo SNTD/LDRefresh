@@ -12,7 +12,6 @@ extern const CGFloat LDRefreshFooterHeight;
 
 typedef void(^LDRefreshedHandler)(void);
 @interface LDRefreshFooterView : UIView
-+ (instancetype)refreshFooterWithHandler:(LDRefreshedHandler)refreshHandler;
 
 @property (nonatomic, assign) BOOL autoLoadMore;//default YES
 @property (nonatomic, assign) BOOL loadMoreEnabled; //default YES

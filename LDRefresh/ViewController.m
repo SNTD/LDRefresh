@@ -8,7 +8,8 @@
 
 #import "ViewController.h"
 #import "WeiboRefreshDemoController.h"
-#import "JingDongRefreshDemoController.h"
+#import "ZhihuRefreshDemoController.h"
+#import "JingdongRefreshDemoController.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) NSArray *dataArray;
@@ -27,7 +28,7 @@
     tableView.dataSource = (id<UITableViewDataSource>)self;
     [self.view addSubview:tableView];
     
-    _dataArray = @[@"仿京东商品详情上下拉切换页面", @"仿微博5.4.0上下拉加载"];
+    _dataArray = @[@"仿知乎回答上下拉切换",@"仿微博5.4.0上下拉加载",@"仿京东商品详情页上下拉切换"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -49,12 +50,16 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (indexPath.row == 0) {
-        JingDongRefreshDemoController *ctr = [[JingDongRefreshDemoController alloc] init];
+    if(indexPath.row == 0) {
+        ZhihuRefreshDemoController *ctr = [[ZhihuRefreshDemoController alloc] init];
+        [self.navigationController pushViewController:ctr animated:YES];
+    }
+    else  if(indexPath.row == 1) {
+        WeiboRefreshDemoController *ctr = [[WeiboRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
     else {
-        WeiboRefreshDemoController *ctr = [[WeiboRefreshDemoController alloc] init];
+        JingdongRefreshDemoController *ctr = [[JingdongRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
 }

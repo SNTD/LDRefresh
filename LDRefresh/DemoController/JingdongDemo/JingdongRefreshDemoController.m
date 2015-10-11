@@ -1,14 +1,14 @@
 //
-//  TaobaoRefreshDemoController.m
+//  LDJingdongRefreshDemoController.m
 //  LDRefresh
 //
-//  Created by lidi on 10/6/15.
+//  Created by lidi on 10/11/15.
 //  Copyright © 2015 lidi. All rights reserved.
 //
 
-#import "JingDongRefreshDemoController.h"
-#import "LDRefreshFooterView.h"
-#import "LDRefreshHeaderView.h"
+#import "JingdongRefreshDemoController.h"
+#import "LDJingdongRefreshFooterView.h"
+#import "LDJingdongRefreshHeaderView.h"
 #import "UIScrollView+LDRefresh.h"
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
@@ -17,7 +17,7 @@
 #define FirstTableColor [UIColor colorWithRed:119/255.0 green:210/255.0 blue:197/255.0 alpha:1.0]
 #define SecondTableColor [UIColor colorWithRed:30/255.0 green:171/255.0 blue:201/255.0 alpha:1.0]
 
-@interface JingDongRefreshDemoController ()
+@interface JingdongRefreshDemoController ()
 //UI
 @property (nonatomic, strong)   UITableView *firstTableView;
 @property (nonatomic, strong)   UITableView *secondTableView;
@@ -26,7 +26,7 @@
 @property (nonatomic, assign) NSInteger data;
 @end
 
-@implementation JingDongRefreshDemoController
+@implementation JingdongRefreshDemoController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +47,7 @@
         tableView.separatorStyle = UITableViewCellSelectionStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
-
+        
         tableView.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64);
         tableView.contentInset = UIEdgeInsetsMake(0, 0, LDRefreshFooterHeight, 0);
         tableView;
@@ -67,38 +67,21 @@
     });
     
     [self addRefresh];
-    
     _data = 20;
 }
 
 - (void)addRefresh {
     //_footerView
     __weak __typeof(self)weakSelf = self;
-    self.firstTableView.refreshFooter = [self.firstTableView addRefreshFooterWithHandler:^{
+    self.firstTableView.refreshFooter = [self.firstTableView addRefreshFooter:[[LDJingdongRefreshFooterView alloc] init] handler:^{
         [weakSelf loadMoreData];
     }];
     self.firstTableView.refreshFooter.autoLoadMore = NO;
     
-    NSDictionary *upDic = @{
-                            @"normalText" : @"上拉查看图文详情",
-                            @"pullingText" : @"上拉查看图文详情",
-                            @"loadingText" : @"上拉查看图文详情"
-                            };
-    [self.firstTableView.refreshFooter setValue:upDic forKey:@"stateTextDic"];
-    [self.firstTableView.refreshFooter setValue:@NO forKey:@"needLoadingAnimation"];
-    
     //_headerView
-    self.secondTableView.refreshHeader = [self.secondTableView addRefreshHeaderWithHandler:^{
+    self.secondTableView.refreshHeader = [self.secondTableView addRefreshHeader:[[LDJingdongRefreshHeaderView alloc] init] handler:^{
         [weakSelf refreshData];
     }];
-
-    NSDictionary *downDic = @{
-                              @"normalText" : @"下拉回到商品详情",
-                              @"pullingText" : @"释放回到商品详情",
-                              @"loadingText" : @"释放回到商品详情"
-                              };
-    [self.secondTableView.refreshHeader setValue:downDic forKey:@"stateTextDic"];
-    [self.secondTableView.refreshHeader setValue:@NO forKey:@"needLoadingAnimation"];
 }
 
 - (void)refreshData {
@@ -115,7 +98,7 @@
         weakSelf.title = @"FirstTableView";
         [weakSelf.secondTableView.refreshHeader endRefresh];
     }];
-
+    
 }
 
 - (void)loadMoreData {

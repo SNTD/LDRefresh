@@ -33,12 +33,15 @@ static const char * LDRefreshHeaderViewKey = "LDRefreshHeaderViewKey";
 }
 
 - (LDRefreshHeaderView *)addRefreshHeaderWithHandler:(LDRefreshedHandler)refreshHandler {
-    
-    LDRefreshHeaderView *refreshHeader = [LDRefreshHeaderView refreshHeaderWithHandler:refreshHandler];
+    return [self addRefreshHeader:[[LDRefreshHeaderView alloc] init] handler:refreshHandler];
+}
+
+- (LDRefreshHeaderView *)addRefreshHeader:(LDRefreshHeaderView *)refreshHeader handler:(LDRefreshedHandler)refreshHandler {
+    [refreshHeader setValue:refreshHandler forKey:@"refreshHandler"];
     [refreshHeader setValue:self forKey:@"scrollView"];
     return refreshHeader;
-    
 }
+
 #pragma mark - refreshFooter
 static const char * LDRefreshFooterViewKey = "LDRefreshFooterViewKey";
 
@@ -59,9 +62,12 @@ static const char * LDRefreshFooterViewKey = "LDRefreshFooterViewKey";
 }
 
 - (LDRefreshFooterView *)addRefreshFooterWithHandler:(LDRefreshedHandler)refreshHandler {
-    
-    LDRefreshFooterView *refreshfooter = [LDRefreshFooterView refreshFooterWithHandler:refreshHandler];
-    [refreshfooter setValue:self forKey:@"scrollView"];
-    return refreshfooter;
+    return [self addRefreshFooter:[[LDRefreshFooterView alloc] init] handler:refreshHandler];
+}
+
+- (LDRefreshFooterView *)addRefreshFooter:(LDRefreshFooterView *)refreshFooter handler:(LDRefreshedHandler)refreshHandler {
+    [refreshFooter setValue:refreshHandler forKey:@"refreshHandler"];
+    [refreshFooter setValue:self forKey:@"scrollView"];
+    return refreshFooter;
 }
 @end

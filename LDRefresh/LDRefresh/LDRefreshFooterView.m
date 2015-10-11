@@ -23,17 +23,18 @@ const CGFloat LDRefreshFooterHeight = 60;
 @interface LDRefreshFooterView ()
 //UI
 @property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong)  UILabel *statusLabel;
+@property (nonatomic, strong)  UILabel *statusLab;
 @property (nonatomic, strong)  UIImageView *arrowImage;
 @property (nonatomic, strong)  UIActivityIndicatorView *activityView;
 
 //Data
 @property (nonatomic, assign)  UIEdgeInsets initEdgeInset;
 @property (nonatomic, strong) NSDictionary *stateTextDic;
-@property (nonatomic, assign) BOOL needLoadingAnimation;//default YES
+@property (nonatomic, assign) CGFloat dragHeightThreshold;
 
 @property (nonatomic, copy) LDRefreshedHandler refreshHandler;
 @property (nonatomic, assign) LDRefreshState refreshState;
+
 @end
 
 @implementation LDRefreshFooterView
@@ -41,12 +42,6 @@ const CGFloat LDRefreshFooterHeight = 60;
 - (void)dealloc{
     [_scrollView removeObserver:self forKeyPath:@"contentOffset"];
     [_scrollView removeObserver:self forKeyPath:@"contentSize"];
-}
-
-+ (instancetype)refreshFooterWithHandler:(LDRefreshedHandler)refreshHandler {
-    LDRefreshFooterView *footer = [[LDRefreshFooterView alloc] init];
-    footer.refreshHandler = refreshHandler;
-    return footer;
 }
 
 - (instancetype)init {
@@ -62,13 +57,13 @@ const CGFloat LDRefreshFooterHeight = 60;
     self.backgroundColor = [UIColor clearColor];
     self.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
     
-    _statusLabel = [[UILabel alloc] init];
-    _statusLabel.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
-    _statusLabel.font = TextFont;
-    _statusLabel.textColor = TextColor;
-    _statusLabel.backgroundColor = [UIColor clearColor];
-    _statusLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLabel];
+    _statusLab = [[UILabel alloc] init];
+    _statusLab.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
+    _statusLab.font = TextFont;
+    _statusLab.textColor = TextColor;
+    _statusLab.backgroundColor = [UIColor clearColor];
+    _statusLab.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_statusLab];
     
     _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
     _arrowImage.frame = CGRectMake(ScreenWidth/2.0 - 60,(LDRefreshFooterHeight-32)/2.0, 32, 32);
@@ -83,9 +78,8 @@ const CGFloat LDRefreshFooterHeight = 60;
 - (void)initData {
     _loadMoreEnabled = YES;
     _autoLoadMore = YES;
-    _needLoadingAnimation = YES;
     
-    _stateTextDic = @{@"normalText" : @"加载中...",
+    self.stateTextDic = @{@"normalText" : @"加载中...",
                       @"pullingText" : @"加载中...",
                       @"loadingText" : @"加载中..."
                      };
@@ -135,7 +129,7 @@ const CGFloat LDRefreshFooterHeight = 60;
     
     else {
         if (self.scrollView.isDragging) {
-            if (self.dragHeight < LDRefreshFooterHeight) {
+            if (self.dragHeight < self.dragHeightThreshold) {
                 self.refreshState = LDRefreshStateNormal;
             }else {
                 self.refreshState = LDRefreshStatePulling;
@@ -160,57 +154,68 @@ const CGFloat LDRefreshFooterHeight = 60;
     return  self.scrollView.contentOffset.y + self.scrollView.bounds.size.height - originY - _initEdgeInset.bottom;
 }
 
+- (CGFloat)dragHeightThreshold {
+    return LDRefreshFooterHeight;
+}
+
 - (void)setRefreshState:(LDRefreshState)refreshState {
     if (_refreshState != refreshState) {
         _refreshState = refreshState;
         
-        //refreshText
-        [self refreshStatusText];
-        
-        //refreshAnimation
-        [self refreshStatusAnimation];
+        switch (_refreshState) {
+            case LDRefreshStateNormal: {
+                [self normalAnimation];
+                break;
+            }
+                
+            case LDRefreshStatePulling: {
+                [self pullingAnimation];
+                break;
+            }
+                
+            case LDRefreshStateLoading: {
+                [self loadingAnimation];
+                
+                if (self.refreshHandler) {
+                    self.refreshHandler();
+                }
+                break;
+            }
+        }
     }
 }
 
-- (void)refreshStatusAnimation {
-    switch (_refreshState) {
-        case LDRefreshStateNormal:
-        {
-            _arrowImage.hidden = NO;
-            [_activityView stopAnimating];
-            [UIView animateWithDuration:0.3 animations:^{
-                _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-                self.scrollView.contentInset = _initEdgeInset;
-            }];
-            break;
-        }
-        case LDRefreshStatePulling:
-        {
-            [UIView animateWithDuration:0.3 animations:^{
-                _arrowImage.transform = CGAffineTransformIdentity;
-            }];
-            break;
-        }
-        case LDRefreshStateLoading:
-        {
-            if (self.needLoadingAnimation) {
-                _arrowImage.hidden = YES;
-                _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-                [_activityView startAnimating];
-                
-                [UIView animateWithDuration:0.3 animations:^{
-                    UIEdgeInsets inset = self.scrollView.contentInset;
-                    inset.bottom += LDRefreshFooterHeight;
-                    self.scrollView.contentInset = inset;
-                }];
-            }
-            
-            if (self.refreshHandler) {
-                self.refreshHandler();
-            }
-            break;
-        }
-    }
+- (void)normalAnimation{
+    _statusLab.text = self.stateTextDic[@"normalText"];
+    
+    _arrowImage.hidden = NO;
+    [_activityView stopAnimating];
+    [UIView animateWithDuration:0.3 animations:^{
+        _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+        self.scrollView.contentInset = _initEdgeInset;
+    }];
+}
+
+- (void)pullingAnimation{
+    _statusLab.text = self.stateTextDic[@"pullingText"];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _arrowImage.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (void)loadingAnimation {
+    _statusLab.text = self.stateTextDic[@"loadingText"];
+    
+    _arrowImage.hidden = YES;
+    _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+    [_activityView startAnimating];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        UIEdgeInsets inset = self.scrollView.contentInset;
+        inset.bottom += LDRefreshFooterHeight;
+        self.scrollView.contentInset = inset;
+    }];
 }
 
 - (void)endRefresh {
@@ -250,43 +255,6 @@ const CGFloat LDRefreshFooterHeight = 60;
             [self.scrollView addSubview:self];
         }else {
             [self removeFromSuperview];
-        }
-    }
-}
-
-- (void)setNeedLoadingAnimation:(BOOL)needLoadingAnimation {
-    if (needLoadingAnimation != _needLoadingAnimation) {
-        _needLoadingAnimation = needLoadingAnimation;
-        
-        if (_needLoadingAnimation) {
-            _arrowImage.image = [UIImage imageNamed:@"grayArrow"];
-            [self addSubview:_arrowImage];
-        }else {
-            [_arrowImage removeFromSuperview];
-            _arrowImage.image = nil;
-        }
-    }
-}
-
-- (void)setStateTextDic:(NSDictionary *)stateTextDic {
-    _stateTextDic = stateTextDic;
-    
-    [self refreshStatusText];
-}
-
-- (void)refreshStatusText {
-    switch (_refreshState) {
-        case LDRefreshStateNormal: {
-            _statusLabel.text = self.stateTextDic[@"normalText"];
-             break;
-        }
-        case LDRefreshStatePulling: {
-            _statusLabel.text = self.stateTextDic[@"pullingText"];
-            break;
-        }
-        case LDRefreshStateLoading: {
-            _statusLabel.text = self.stateTextDic[@"loadingText"];
-            break;
         }
     }
 }

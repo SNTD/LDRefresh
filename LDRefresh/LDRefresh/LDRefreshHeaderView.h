@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-extern const CGFloat LDRfreshHeaderHeight;
+extern const CGFloat LDRefreshHeaderHeight;
 
 typedef void(^LDRefreshedHandler)(void);
 @interface LDRefreshHeaderView : UIView
-
-+ (instancetype)refreshHeaderWithHandler:(LDRefreshedHandler)refreshHandler;
 
 - (void)startRefresh;
 - (void)endRefresh;

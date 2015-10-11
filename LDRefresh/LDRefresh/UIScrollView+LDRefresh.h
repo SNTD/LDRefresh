@@ -17,9 +17,13 @@ typedef void(^LDRefreshedHandler)(void);
 //header
 @property (strong, nonatomic) LDRefreshHeaderView *refreshHeader;
 - (LDRefreshHeaderView *)addRefreshHeaderWithHandler:(LDRefreshedHandler)refreshHandler;
+//For header Extend
+- (LDRefreshHeaderView *)addRefreshHeader:(LDRefreshHeaderView *)refreshHeaderView handler:(LDRefreshedHandler)refreshHandler;
 
 //footer
 @property (strong, nonatomic) LDRefreshFooterView *refreshFooter;
 - (LDRefreshFooterView *)addRefreshFooterWithHandler:(LDRefreshedHandler)refreshHandler;
+//For footer Extend
+- (LDRefreshFooterView *)addRefreshFooter:(LDRefreshFooterView *)refreshFooterView handler:(LDRefreshedHandler)refreshHandler;
 
 @end
