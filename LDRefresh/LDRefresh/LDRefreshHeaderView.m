@@ -100,7 +100,7 @@ const CGFloat LDRefreshHeaderHeight = 60;
 }
 
 - (void)scrollViewContentOffsetDidChange {
-    if (self.refreshState == LDRefreshStateLoading) {
+    if (self.dragHeight < 0 || self.refreshState == LDRefreshStateLoading) {
         return;
     }
     
@@ -114,11 +114,6 @@ const CGFloat LDRefreshHeaderHeight = 60;
     else {
         if (self.refreshState == LDRefreshStatePulling) {
             self.refreshState = LDRefreshStateLoading;
-        }
-        else {
-            if (self.dragHeight < self.dragHeightThreshold) {
-                self.refreshState = LDRefreshStateNormal;
-            }
         }
     }
 }

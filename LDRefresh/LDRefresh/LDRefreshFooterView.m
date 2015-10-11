@@ -116,7 +116,7 @@ const CGFloat LDRefreshFooterHeight = 60;
 }
 
 - (void)scrollViewContentOffsetDidChange {
-    if (self.refreshState == LDRefreshStateLoading || !self.loadMoreEnabled) {
+    if (self.dragHeight < 0 || self.refreshState == LDRefreshStateLoading || !self.loadMoreEnabled) {
         return;
     }
     
@@ -124,9 +124,7 @@ const CGFloat LDRefreshFooterHeight = 60;
         if (self.dragHeight > 1) {
             self.refreshState = LDRefreshStateLoading;
         }
-        return;
     }
-    
     else {
         if (self.scrollView.isDragging) {
             if (self.dragHeight < self.dragHeightThreshold) {
@@ -138,11 +136,6 @@ const CGFloat LDRefreshFooterHeight = 60;
         } else {
             if (self.refreshState == LDRefreshStatePulling) {
                 self.refreshState = LDRefreshStateLoading;
-            }
-            else {
-                if (self.dragHeight < self.dragHeightThreshold) {
-                    self.refreshState = LDRefreshStateNormal;
-                }
             }
         }
     }
