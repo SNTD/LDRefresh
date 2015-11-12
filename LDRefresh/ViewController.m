@@ -10,6 +10,7 @@
 #import "WeiboRefreshDemoController.h"
 #import "ZhihuRefreshDemoController.h"
 #import "JingdongRefreshDemoController.h"
+#import "TNRefreshDemoController.h"
 
 @interface ViewController ()
 @property (nonatomic, strong) NSArray *dataArray;
@@ -23,12 +24,16 @@
     
     self.title = @"LDRefresh";
     
+    if ([self respondsToSelector:@selector(automaticallyAdjustsScrollViewInsets)])
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.height, [UIScreen mainScreen].bounds.size.height - 64)];
     tableView.delegate = (id<UITableViewDelegate>)self;
     tableView.dataSource = (id<UITableViewDataSource>)self;
     [self.view addSubview:tableView];
     
-    _dataArray = @[@"仿知乎回答上下拉切换",@"仿微博5.4.0上下拉加载",@"仿京东商品详情页上下拉切换"];
+    _dataArray = @[@"仿知乎回答上下拉切换",@"仿微博5.4.0上下拉加载",@"仿京东商品详情页上下拉切换",@"仿途牛旅游上下拉加载"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -58,8 +63,12 @@
         WeiboRefreshDemoController *ctr = [[WeiboRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
-    else {
+    else if(indexPath.row == 2){
         JingdongRefreshDemoController *ctr = [[JingdongRefreshDemoController alloc] init];
+        [self.navigationController pushViewController:ctr animated:YES];
+    }
+    else {
+        TNRefreshDemoController *ctr = [[TNRefreshDemoController alloc] init];
         [self.navigationController pushViewController:ctr animated:YES];
     }
 }

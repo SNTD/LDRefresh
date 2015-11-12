@@ -21,6 +21,9 @@ const CGFloat LDRefreshHeaderHeight = 60;
 #define TextFont  [UIFont systemFontOfSize:12.0f]
 
 @interface LDRefreshHeaderView ()
+{
+    UIScrollView *_scrollView;
+}
 //UI
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong)  UILabel *statusLab;
@@ -132,6 +135,10 @@ const CGFloat LDRefreshHeaderHeight = 60;
     switch (_refreshState) {
         case LDRefreshStateNormal: {
             [self normalAnimation];
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.scrollView.contentInset = _initEdgeInset;
+            }];
             break;
         }
             
@@ -142,6 +149,12 @@ const CGFloat LDRefreshHeaderHeight = 60;
             
         case LDRefreshStateLoading: {
             [self loadingAnimation];
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                UIEdgeInsets inset = _initEdgeInset;
+                inset.top += LDRefreshHeaderHeight;
+                self.scrollView.contentInset = inset;
+            }];
             
             if (self.refreshHandler) {
                 self.refreshHandler();
@@ -158,7 +171,6 @@ const CGFloat LDRefreshHeaderHeight = 60;
     [_activityView stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{
         _arrowImage.transform = CGAffineTransformIdentity;
-        self.scrollView.contentInset = _initEdgeInset;
     }];
 }
 
@@ -176,11 +188,6 @@ const CGFloat LDRefreshHeaderHeight = 60;
     _arrowImage.hidden = YES;
     _arrowImage.transform = CGAffineTransformIdentity;
     [_activityView startAnimating];
-    [UIView animateWithDuration:0.3 animations:^{
-        UIEdgeInsets inset = _initEdgeInset;
-        inset.top += LDRefreshHeaderHeight;
-        self.scrollView.contentInset = inset;
-    }];
 }
 
 - (void)startRefresh {

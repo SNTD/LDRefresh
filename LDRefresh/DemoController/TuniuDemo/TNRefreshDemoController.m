@@ -1,17 +1,17 @@
 //
-//  WeiboRefreshDemoController.m
+//  TNRefreshDemoController.m
 //  LDRefresh
 //
-//  Created by lidi on 10/6/15.
+//  Created by lidi on 11/12/15.
 //  Copyright © 2015 lidi. All rights reserved.
 //
 
-#import "WeiboRefreshDemoController.h"
-#import "LDRefreshFooterView.h"
-#import "LDRefreshHeaderView.h"
+#import "TNRefreshDemoController.h"
+#import "TNRefreshFooterView.h"
+#import "TNRefreshHeaderView.h"
 #import "UIScrollView+LDRefresh.h"
 
-@interface WeiboRefreshDemoController ()
+@interface TNRefreshDemoController ()
 //UI
 @property (nonatomic, strong)   UITableView *tableView;
 
@@ -19,7 +19,7 @@
 @property (nonatomic, assign) NSInteger data;
 @end
 
-@implementation WeiboRefreshDemoController
+@implementation TNRefreshDemoController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +28,7 @@
     {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    self.title = @"微博5.4.0";
+    self.title = @"途牛旅游";
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.height, [UIScreen mainScreen].bounds.size.height - 64)];
     _tableView.delegate = (id<UITableViewDelegate>)self;
@@ -49,14 +49,14 @@
 - (void)addRefreshView {
     
     __weak __typeof(self) weakSelf = self;
-
+    
     //下拉刷新
-    _tableView.refreshHeader = [_tableView addRefreshHeaderWithHandler:^ {
+    _tableView.refreshHeader = [_tableView addRefreshHeader:[[TNRefreshHeaderView alloc] init]  handler:^{
         [weakSelf refreshData];
     }];
     
     //上拉加载更多
-    _tableView.refreshFooter = [_tableView addRefreshFooterWithHandler:^ {
+    _tableView.refreshFooter = [_tableView addRefreshFooter:[[TNRefreshFooterView alloc] init]  handler:^{
         [weakSelf loadMoreData];
     }];
 //   _tableView.refreshFooter.autoLoadMore = NO;
@@ -99,7 +99,7 @@
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@-京东双11物流杠杆的！", @(indexPath.row)];
     return cell;
 }
 @end

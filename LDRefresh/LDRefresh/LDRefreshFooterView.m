@@ -162,6 +162,10 @@ const CGFloat LDRefreshFooterHeight = 60;
     switch (_refreshState) {
         case LDRefreshStateNormal: {
             [self normalAnimation];
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.scrollView.contentInset = _initEdgeInset;
+            }];
             break;
         }
             
@@ -173,6 +177,11 @@ const CGFloat LDRefreshFooterHeight = 60;
         case LDRefreshStateLoading: {
             [self loadingAnimation];
             
+            [UIView animateWithDuration:0.3 animations:^{
+                UIEdgeInsets inset = self.scrollView.contentInset;
+                inset.bottom += LDRefreshFooterHeight;
+                self.scrollView.contentInset = inset;
+            }];
             if (self.refreshHandler) {
                 self.refreshHandler();
             }
@@ -188,7 +197,6 @@ const CGFloat LDRefreshFooterHeight = 60;
     [_activityView stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{
         _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-        self.scrollView.contentInset = _initEdgeInset;
     }];
 }
 
@@ -206,12 +214,6 @@ const CGFloat LDRefreshFooterHeight = 60;
     _arrowImage.hidden = YES;
     _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
     [_activityView startAnimating];
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        UIEdgeInsets inset = self.scrollView.contentInset;
-        inset.bottom += LDRefreshFooterHeight;
-        self.scrollView.contentInset = inset;
-    }];
 }
 
 - (void)endRefresh {
