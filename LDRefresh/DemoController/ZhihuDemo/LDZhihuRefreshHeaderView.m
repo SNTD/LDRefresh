@@ -10,11 +10,11 @@
 #import "LDZhihuArrow.h"
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
-#define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
-#define TextFont  [UIFont systemFontOfSize:12.0f]
+#define TextColor   [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
+#define TextFont    [UIFont systemFontOfSize:12.0f]
 
 @interface LDZhihuRefreshHeaderView ()
-@property (nonatomic, strong) UILabel *statusLab;
+@property (nonatomic, strong) UILabel      *statusLab;
 @property (nonatomic, strong) LDZhihuArrow *zhihuArrow;
 @end
 
@@ -34,18 +34,26 @@
 - (void)drawRefreshView {
     self.frame = CGRectMake(0, -LDRefreshHeaderHeight, ScreenWidth, LDRefreshHeaderHeight);
     
-    CGFloat TopMargin = 15.0f;
+    CGFloat TopMargin    = 15.0f;
     CGFloat bottomMargin = 15.0f;
     
-    _statusLab = [[UILabel alloc] init];
-    _statusLab.frame = CGRectMake(0, TopMargin, ScreenWidth, 12.0f);
-    _statusLab.font = TextFont;
-    _statusLab.textColor = TextColor;
-    _statusLab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLab];
-    
-    _zhihuArrow = [[LDZhihuArrow alloc] initWithFrame:CGRectMake(ScreenWidth/2.0 - kArrowWidth/2.0, LDRefreshHeaderHeight - bottomMargin, kArrowWidth, kArrowUpDownHeight)];
-    [self addSubview:_zhihuArrow];
+    self.statusLab = ({
+        UILabel *lab      = [[UILabel alloc] init];
+        lab.frame         = CGRectMake(0, TopMargin, ScreenWidth, 12.0f);
+        lab.font          = TextFont;
+        lab.textColor     = TextColor;
+        lab.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:lab];
+        
+        lab;
+    });
+
+    self.zhihuArrow = ({
+        LDZhihuArrow *zhihuArrow = [[LDZhihuArrow alloc] initWithFrame:CGRectMake(ScreenWidth/2.0 - kArrowWidth/2.0, LDRefreshHeaderHeight - bottomMargin, kArrowWidth, kArrowUpDownHeight)];
+        [self addSubview:zhihuArrow];
+        
+        zhihuArrow;
+    });
 }
 
 - (void)normalAnimation{

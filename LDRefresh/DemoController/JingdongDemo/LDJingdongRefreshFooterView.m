@@ -10,8 +10,8 @@
 #import <objc/message.h>
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
-#define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
-#define TextFont  [UIFont systemFontOfSize:12.0f]
+#define TextColor   [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
+#define TextFont    [UIFont systemFontOfSize:12.0f]
 
 @interface LDJingdongRefreshFooterView ()
 @property (nonatomic, strong) UILabel *statusLab;
@@ -35,12 +35,16 @@
     
     CGFloat TopMargin = 0;
     
-    _statusLab = [[UILabel alloc] init];
-    _statusLab.frame = CGRectMake(0, TopMargin, ScreenWidth, LDRefreshFooterHeight);
-    _statusLab.font = TextFont;
-    _statusLab.textColor = TextColor;
-    _statusLab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLab];
+    self.statusLab = ({
+        UILabel *lab      = [[UILabel alloc] init];
+        lab.frame         = CGRectMake(0, TopMargin, ScreenWidth, LDRefreshFooterHeight);
+        lab.font          = TextFont;
+        lab.textColor     = TextColor;
+        lab.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:lab];
+        
+        lab;
+    });
 }
 
 - (void)normalAnimation{

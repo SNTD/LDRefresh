@@ -36,28 +36,39 @@
 - (void)drawRefreshView {
     self.frame = CGRectMake(0, -LDRefreshHeaderHeight, ScreenWidth, LDRefreshHeaderHeight);
     
-    _statusLab = [[UILabel alloc] init];
-    _statusLab.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshHeaderHeight);
-    _statusLab.font = TextFont;
-    _statusLab.textColor = TextColor;
-    _statusLab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLab];
-    
-    _injectionView = [[TNInjectionAnimation alloc] initWithFrame:CGRectMake(ScreenWidth/2.0 - 60 - 10,(LDRefreshHeaderHeight-30)/2.0, 30, 30)];
-    [self addSubview:_injectionView];
-    
-    _loadingIndicator = [[TNActivityIndicator alloc] initWithFrame:_injectionView.frame];
-    _loadingIndicator.hidesWhenStopped = YES;
-    [self addSubview:_loadingIndicator];
+    self.statusLab = ({
+        UILabel *lab      = [[UILabel alloc] init];
+        lab.frame         = CGRectMake(0, 0, ScreenWidth, LDRefreshHeaderHeight);
+        lab.font          = TextFont;
+        lab.textColor     = TextColor;
+        lab.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:lab];
+        
+        lab;
+    });
+
+    self.injectionView = ({
+        TNInjectionAnimation *view = [[TNInjectionAnimation alloc] initWithFrame:CGRectMake(ScreenWidth/2.0 - 60 - 10,(LDRefreshHeaderHeight - 30)/2.0, 30, 30)];
+        [self addSubview:view];
+        
+        view;
+    });
+
+    self.loadingIndicator = ({
+        TNActivityIndicator *loadingIndicator = [[TNActivityIndicator alloc] initWithFrame:_injectionView.frame];
+        loadingIndicator.hidesWhenStopped     = YES;
+        [self addSubview:loadingIndicator];
+        
+        loadingIndicator;
+    });
 }
 
 - (void)normalAnimation{
-    _statusLab.text = self.stateTextDic[@"normalText"];
-    
+    _statusLab.text       = self.stateTextDic[@"normalText"];
+
+    [_loadingIndicator stopAnimating];
     _injectionView.hidden = NO;
     [_injectionView refreshMaskLayerPosition:self.dragHeight];
-    
-    [_loadingIndicator stopAnimating];
 }
 
 - (void)pullingAnimation{

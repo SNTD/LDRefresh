@@ -36,19 +36,31 @@
 - (void)drawRefreshView {
     self.frame = CGRectMake(0, -LDRefreshFooterHeight, ScreenWidth, LDRefreshFooterHeight);
     
-    _statusLab = [[UILabel alloc] init];
-    _statusLab.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
-    _statusLab.font = TextFont;
-    _statusLab.textColor = TextColor;
-    _statusLab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLab];
+    self.statusLab = ({
+        UILabel *lab      = [[UILabel alloc] init];
+        lab.frame         = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
+        lab.font          = TextFont;
+        lab.textColor     = TextColor;
+        lab.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:lab];
+        
+        lab;
+    });
     
-    _injectionView = [[TNInjectionAnimation alloc] initWithFrame:CGRectMake(ScreenWidth/2.0 - 60 - 10,(LDRefreshFooterHeight-30)/2.0, 30, 30)];
-    [self addSubview:_injectionView];
+    self.injectionView = ({
+        TNInjectionAnimation *view = [[TNInjectionAnimation alloc] initWithFrame:CGRectMake(ScreenWidth/2.0 - 60 - 10,(LDRefreshFooterHeight - 30)/2.0, 30, 30)];
+        [self addSubview:view];
+        
+        view;
+    });
     
-    _loadingIndicator = [[TNActivityIndicator alloc] initWithFrame:_injectionView.frame];
-    _loadingIndicator.hidesWhenStopped = YES;
-    [self addSubview:_loadingIndicator];
+    self.loadingIndicator = ({
+        TNActivityIndicator *loadingIndicator = [[TNActivityIndicator alloc] initWithFrame:_injectionView.frame];
+        loadingIndicator.hidesWhenStopped     = YES;
+        [self addSubview:loadingIndicator];
+        
+        loadingIndicator;
+    });
 }
 
 - (void)normalAnimation{

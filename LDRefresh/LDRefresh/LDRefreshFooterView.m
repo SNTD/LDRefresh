@@ -9,32 +9,33 @@
 #import "LDRefreshFooterView.h"
 
 typedef NS_ENUM(NSInteger, LDRefreshState) {
-    LDRefreshStateNormal = 1,
+    LDRefreshStateNormal  = 1,
     LDRefreshStatePulling = 2,
     LDRefreshStateLoading = 3,
 };
 
+typedef void(^LDRefreshedHandler)(void);
+
 const CGFloat LDRefreshFooterHeight = 60;
 
-#define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
-#define TextFont  [UIFont systemFontOfSize:12.0f]
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
+#define TextColor   [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
+#define TextFont    [UIFont systemFontOfSize:12.0f]
 
 @interface LDRefreshFooterView ()
 //UI
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong)  UILabel *statusLab;
-@property (nonatomic, strong)  UIImageView *arrowImage;
-@property (nonatomic, strong)  UIActivityIndicatorView *activityView;
+@property (nonatomic, strong) UIScrollView            *scrollView;
+@property (nonatomic, strong) UILabel                 *statusLab;
+@property (nonatomic, strong) UIImageView             *arrowImage;
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 //Data
-@property (nonatomic, assign)  UIEdgeInsets initEdgeInset;
-@property (nonatomic, strong) NSDictionary *stateTextDic;
-@property (nonatomic, assign) CGFloat dragHeightThreshold;
+@property (nonatomic, assign) UIEdgeInsets            initEdgeInset;
+@property (nonatomic, strong) NSDictionary            *stateTextDic;
+@property (nonatomic, assign) CGFloat                 dragHeightThreshold;
 
-@property (nonatomic, copy) LDRefreshedHandler refreshHandler;
-@property (nonatomic, assign) LDRefreshState refreshState;
-
+@property (nonatomic, copy  ) LDRefreshedHandler      refreshHandler;
+@property (nonatomic, assign) LDRefreshState          refreshState;
 @end
 
 @implementation LDRefreshFooterView
@@ -57,22 +58,34 @@ const CGFloat LDRefreshFooterHeight = 60;
     self.backgroundColor = [UIColor clearColor];
     self.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
     
-    _statusLab = [[UILabel alloc] init];
-    _statusLab.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
-    _statusLab.font = TextFont;
-    _statusLab.textColor = TextColor;
-    _statusLab.backgroundColor = [UIColor clearColor];
-    _statusLab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLab];
-    
-    _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
-    _arrowImage.frame = CGRectMake(ScreenWidth/2.0 - 60,(LDRefreshFooterHeight-32)/2.0, 32, 32);
-    [self addSubview:_arrowImage];
-    
-    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    _activityView.color = TextColor;
-    _activityView.frame = _arrowImage.frame;
-    [self addSubview:_activityView];
+    self.statusLab = ({
+        UILabel *lab        = [[UILabel alloc] init];
+        lab.frame           = CGRectMake(0, 0, ScreenWidth, LDRefreshFooterHeight);
+        lab.font            = TextFont;
+        lab.textColor       = TextColor;
+        lab.backgroundColor = [UIColor clearColor];
+        lab.textAlignment   = NSTextAlignmentCenter;
+        [self addSubview:lab];
+        
+        lab;
+    });
+
+    self.arrowImage = ({
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
+        imageView.frame        = CGRectMake(ScreenWidth/2.0 - 60,(LDRefreshFooterHeight-32)/2.0, 32, 32);
+        [self addSubview:imageView];
+        
+        imageView;
+    });
+
+    self.indicatorView = ({
+        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        indicatorView.color                    = TextColor;
+        indicatorView.frame                    = _arrowImage.frame;
+        [self addSubview:indicatorView];
+        
+        indicatorView;
+    });
 }
 
 - (void)initData {
@@ -80,9 +93,9 @@ const CGFloat LDRefreshFooterHeight = 60;
     _autoLoadMore = YES;
     
     self.stateTextDic = @{@"normalText" : @"加载中...",
-                      @"pullingText" : @"加载中...",
-                      @"loadingText" : @"加载中..."
-                     };
+                          @"pullingText" : @"加载中...",
+                          @"loadingText" : @"加载中..."
+                          };
     
     self.refreshState = LDRefreshStateNormal;
 }
@@ -90,7 +103,7 @@ const CGFloat LDRefreshFooterHeight = 60;
 - (void)setScrollView:(UIScrollView *)scrollView {
     if (_scrollView != scrollView) {
         _initEdgeInset = scrollView.contentInset;
-        _scrollView = scrollView;
+        _scrollView    = scrollView;
         [_scrollView addSubview:self];
         
         [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
@@ -102,9 +115,9 @@ const CGFloat LDRefreshFooterHeight = 60;
 }
 
 - (void)refreshFootViewFrame {
-    CGRect frame = self.frame;
-    frame.origin.y =  MAX(self.scrollView.frame.size.height, self.scrollView.contentSize.height);
-    self.frame = frame;
+    CGRect frame   = self.frame;
+    frame.origin.y = MAX(self.scrollView.frame.size.height, self.scrollView.contentSize.height);
+    self.frame     = frame;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -146,9 +159,9 @@ const CGFloat LDRefreshFooterHeight = 60;
 }
 
 - (CGFloat)dragHeight {
-    CGFloat contentHeight = self.scrollView.contentSize.height;
+    CGFloat contentHeight   = self.scrollView.contentSize.height;
     CGFloat tableViewHeight = self.scrollView.bounds.size.height;
-    CGFloat originY = MAX(contentHeight, tableViewHeight);
+    CGFloat originY         = MAX(contentHeight, tableViewHeight);
     return  self.scrollView.contentOffset.y + self.scrollView.bounds.size.height - originY - _initEdgeInset.bottom;
 }
 
@@ -178,8 +191,8 @@ const CGFloat LDRefreshFooterHeight = 60;
             [self loadingAnimation];
             
             [UIView animateWithDuration:0.3 animations:^{
-                UIEdgeInsets inset = self.scrollView.contentInset;
-                inset.bottom += LDRefreshFooterHeight;
+                UIEdgeInsets inset           = self.scrollView.contentInset;
+                inset.bottom                 += LDRefreshFooterHeight;
                 self.scrollView.contentInset = inset;
             }];
             if (self.refreshHandler) {
@@ -191,10 +204,10 @@ const CGFloat LDRefreshFooterHeight = 60;
 }
 
 - (void)normalAnimation{
-    _statusLab.text = self.stateTextDic[@"normalText"];
-    
+    _statusLab.text    = self.stateTextDic[@"normalText"];
+
     _arrowImage.hidden = NO;
-    [_activityView stopAnimating];
+    [_indicatorView stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{
         _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
     }];
@@ -209,11 +222,11 @@ const CGFloat LDRefreshFooterHeight = 60;
 }
 
 - (void)loadingAnimation {
-    _statusLab.text = self.stateTextDic[@"loadingText"];
-    
+    _statusLab.text    = self.stateTextDic[@"loadingText"];
+
     _arrowImage.hidden = YES;
     _arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
-    [_activityView startAnimating];
+    [_indicatorView startAnimating];
 }
 
 - (void)endRefresh {

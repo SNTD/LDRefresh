@@ -40,11 +40,11 @@
     self.title = @"琅琊榜";
     
     self.firstTableView = ({
-        UITableView *tableView = [[UITableView alloc] init];
-        tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        tableView.delegate = (id<UITableViewDelegate>)self;
-        tableView.dataSource = (id<UITableViewDataSource>)self;
-        tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        UITableView *tableView                 = [[UITableView alloc] init];
+        tableView.backgroundColor              = [UIColor groupTableViewBackgroundColor];
+        tableView.delegate                     = (id<UITableViewDelegate>)self;
+        tableView.dataSource                   = (id<UITableViewDataSource>)self;
+        tableView.separatorStyle               = UITableViewCellSelectionStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
         
@@ -53,11 +53,11 @@
     });
     
     self.secondTableView = ({
-        UITableView *tableView = [[UITableView alloc] init];
-        tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        tableView.delegate = (id<UITableViewDelegate>)self;
-        tableView.dataSource = (id<UITableViewDataSource>)self;
-        tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        UITableView *tableView                 = [[UITableView alloc] init];
+        tableView.backgroundColor              = [UIColor groupTableViewBackgroundColor];
+        tableView.delegate                     = (id<UITableViewDelegate>)self;
+        tableView.dataSource                   = (id<UITableViewDataSource>)self;
+        tableView.separatorStyle               = UITableViewCellSelectionStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
         
@@ -86,12 +86,12 @@
 - (void)refreshData {
     __weak __typeof(self)weakSelf = self;
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = weakSelf.secondTableView.frame;
-        frame.origin.y = 64;
-        weakSelf.firstTableView.frame = frame;
-        
-        frame = weakSelf.secondTableView.frame;
-        frame.origin.y = kScreenHeight;
+        CGRect frame                   = weakSelf.secondTableView.frame;
+        frame.origin.y                 = 64;
+        weakSelf.firstTableView.frame  = frame;
+
+        frame                          = weakSelf.secondTableView.frame;
+        frame.origin.y                 = kScreenHeight;
         weakSelf.secondTableView.frame = frame;
     } completion:^(BOOL finished) {
         [weakSelf.secondTableView.refreshHeader endRefresh];
@@ -102,12 +102,12 @@
 - (void)loadMoreData {
     __weak __typeof(self)weakSelf = self;
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = weakSelf.firstTableView.frame;
-        frame.origin.y = - (kScreenHeight - 64);
-        weakSelf.firstTableView.frame = frame;
-        
-        frame = weakSelf.secondTableView.frame;
-        frame.origin.y = 64;
+        CGRect frame                   = weakSelf.firstTableView.frame;
+        frame.origin.y                 = - (kScreenHeight - 64);
+        weakSelf.firstTableView.frame  = frame;
+
+        frame                          = weakSelf.secondTableView.frame;
+        frame.origin.y                 = 64;
         weakSelf.secondTableView.frame = frame;
     } completion:^(BOOL finished) {
         [weakSelf.firstTableView.refreshFooter endRefresh];

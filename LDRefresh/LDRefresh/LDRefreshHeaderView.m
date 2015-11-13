@@ -9,34 +9,33 @@
 #import "LDRefreshHeaderView.h"
 
 typedef NS_ENUM(NSInteger, LDRefreshState) {
-    LDRefreshStateNormal = 1,
+    LDRefreshStateNormal  = 1,
     LDRefreshStatePulling = 2,
     LDRefreshStateLoading = 3,
 };
 
+typedef void(^LDRefreshedHandler)(void);
+
 const CGFloat LDRefreshHeaderHeight = 60;
 
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
-#define TextColor [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
-#define TextFont  [UIFont systemFontOfSize:12.0f]
+#define TextColor   [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0]
+#define TextFont    [UIFont systemFontOfSize:12.0f]
 
 @interface LDRefreshHeaderView ()
-{
-    UIScrollView *_scrollView;
-}
 //UI
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong)  UILabel *statusLab;
-@property (nonatomic, strong)  UIImageView *arrowImage;
-@property (nonatomic, strong)  UIActivityIndicatorView *activityView;
+@property (nonatomic, strong) UIScrollView            *scrollView;
+@property (nonatomic, strong) UILabel                 *statusLab;
+@property (nonatomic, strong) UIImageView             *arrowImage;
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 
 //Data
-@property (nonatomic, assign)  UIEdgeInsets initEdgeInset;
-@property (nonatomic, strong) NSDictionary *stateTextDic;
-@property (nonatomic, assign) CGFloat dragHeightThreshold;
+@property (nonatomic, assign) UIEdgeInsets            initEdgeInset;
+@property (nonatomic, strong) NSDictionary            *stateTextDic;
+@property (nonatomic, assign) CGFloat                 dragHeightThreshold;
 
-@property (nonatomic, copy) LDRefreshedHandler refreshHandler;
-@property (nonatomic, assign) LDRefreshState refreshState;
+@property (nonatomic, copy  ) LDRefreshedHandler      refreshHandler;
+@property (nonatomic, assign) LDRefreshState          refreshState;
 @end
 
 @implementation LDRefreshHeaderView
@@ -59,22 +58,34 @@ const CGFloat LDRefreshHeaderHeight = 60;
     self.backgroundColor = [UIColor clearColor];
     self.frame = CGRectMake(0, -LDRefreshHeaderHeight, ScreenWidth, LDRefreshHeaderHeight);
     
-    _statusLab = [[UILabel alloc] init];
-    _statusLab.frame = CGRectMake(0, 0, ScreenWidth, LDRefreshHeaderHeight);
-    _statusLab.font = TextFont;
-    _statusLab.textColor = TextColor;
-    _statusLab.backgroundColor = [UIColor clearColor];
-    _statusLab.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_statusLab];
-    
-    _arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
-    _arrowImage.frame = CGRectMake(ScreenWidth/2.0 - 60,(LDRefreshHeaderHeight-32)/2.0, 32, 32);
-    [self addSubview:_arrowImage];
-    
-    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    _activityView.color = TextColor;
-    _activityView.frame = _arrowImage.frame;
-    [self addSubview:_activityView];
+    self.statusLab = ({
+        UILabel *lab        = [[UILabel alloc] init];
+        lab.frame           = CGRectMake(0, 0, ScreenWidth, LDRefreshHeaderHeight);
+        lab.font            = TextFont;
+        lab.textColor       = TextColor;
+        lab.backgroundColor = [UIColor clearColor];
+        lab.textAlignment   = NSTextAlignmentCenter;
+        [self addSubview:lab];
+        
+        lab;
+    });
+
+    self.arrowImage = ({
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_pull_refresh"]];
+        imageView.frame        = CGRectMake(ScreenWidth/2.0 - 60,(LDRefreshHeaderHeight-32)/2.0, 32, 32);
+        [self addSubview:imageView];
+        
+        imageView;
+    });
+
+    self.indicatorView = ({
+        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        indicatorView.color                    = TextColor;
+        indicatorView.frame                    = _arrowImage.frame;
+        [self addSubview:indicatorView];
+        
+        indicatorView;
+    });
 }
 
 - (void)initData {
@@ -89,7 +100,7 @@ const CGFloat LDRefreshHeaderHeight = 60;
 - (void)setScrollView:(UIScrollView *)scrollView {
     if (_scrollView != scrollView) {
         _initEdgeInset = scrollView.contentInset;
-        _scrollView = scrollView;
+        _scrollView    = scrollView;
         [_scrollView addSubview:self];
         
         [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
@@ -151,8 +162,8 @@ const CGFloat LDRefreshHeaderHeight = 60;
             [self loadingAnimation];
             
             [UIView animateWithDuration:0.3 animations:^{
-                UIEdgeInsets inset = _initEdgeInset;
-                inset.top += LDRefreshHeaderHeight;
+                UIEdgeInsets inset           = _initEdgeInset;
+                inset.top                    += LDRefreshHeaderHeight;
                 self.scrollView.contentInset = inset;
             }];
             
@@ -165,10 +176,10 @@ const CGFloat LDRefreshHeaderHeight = 60;
 }
 
 - (void)normalAnimation{
-    _statusLab.text = self.stateTextDic[@"normalText"];
-    
+    _statusLab.text    = self.stateTextDic[@"normalText"];
+
     _arrowImage.hidden = NO;
-    [_activityView stopAnimating];
+    [_indicatorView stopAnimating];
     [UIView animateWithDuration:0.3 animations:^{
         _arrowImage.transform = CGAffineTransformIdentity;
     }];
@@ -183,11 +194,11 @@ const CGFloat LDRefreshHeaderHeight = 60;
 }
 
 - (void)loadingAnimation {
-    _statusLab.text = self.stateTextDic[@"loadingText"];
-    
+    _statusLab.text    = self.stateTextDic[@"loadingText"];
+
     _arrowImage.hidden = YES;
     _arrowImage.transform = CGAffineTransformIdentity;
-    [_activityView startAnimating];
+    [_indicatorView startAnimating];
 }
 
 - (void)startRefresh {

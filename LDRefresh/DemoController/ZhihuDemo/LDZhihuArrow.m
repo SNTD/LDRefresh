@@ -8,12 +8,12 @@
 
 #import "LDZhihuArrow.h"
 
-CGFloat kArrowWidth = 26.0f;
-CGFloat kArrowLineHeight = 4.0f;
+CGFloat kArrowWidth        = 26.0f;
+CGFloat kArrowLineHeight   = 4.0f;
 CGFloat kArrowUpDownHeight = 6.0f;
 
 #define arrowStrokeColor [UIColor colorWithRed:197/255.0 green:200/255.0 blue:214/255.0 alpha:1.0].CGColor
-#define arrowFillColor [UIColor groupTableViewBackgroundColor].CGColor
+#define arrowFillColor   [UIColor groupTableViewBackgroundColor].CGColor
 
 @interface LDZhihuArrow ()
 @property (nonatomic, strong) CAShapeLayer *arrowLayer;
@@ -31,31 +31,31 @@ CGFloat kArrowUpDownHeight = 6.0f;
         self.arrowLayer = ({
             CAShapeLayer *shapeLayer = [CAShapeLayer layer];
             //线高
-            shapeLayer.strokeColor = arrowStrokeColor;
-            shapeLayer.lineWidth = kArrowLineHeight;
+            shapeLayer.strokeColor   = arrowStrokeColor;
+            shapeLayer.lineWidth     = kArrowLineHeight;
             //填充线中空的颜色
-            shapeLayer.fillColor = arrowFillColor;
-            shapeLayer.lineCap = kCALineCapRound;
+            shapeLayer.fillColor     = arrowFillColor;
+            shapeLayer.lineCap       = kCALineCapRound;
             [self.layer addSublayer:shapeLayer];
             
             shapeLayer;
         });
 
-        //默认
+        //default
         [self showLine];
     }
     return self;
 }
 
 - (CGPathRef)drawArrowPath:(CGFloat)offsetY{
-    UIBezierPath *line = [UIBezierPath bezierPath];
-    CGFloat arrowOriginX = 0.0f;
-    CGFloat arrowOriginY = 0.0f;
-    
-    CGPoint originPoint = CGPointMake(arrowOriginX, arrowOriginY);
-    CGPoint endPoint = CGPointMake(arrowOriginX + kArrowWidth, arrowOriginY);
+    UIBezierPath *line    = [UIBezierPath bezierPath];
+    CGFloat arrowOriginX  = 0.0f;
+    CGFloat arrowOriginY  = 0.0f;
+
+    CGPoint originPoint   = CGPointMake(arrowOriginX, arrowOriginY);
+    CGPoint endPoint      = CGPointMake(arrowOriginX + kArrowWidth, arrowOriginY);
     CGPoint controlPoint1 = CGPointMake(arrowOriginX + kArrowWidth/2.0, arrowOriginY + offsetY);
-    
+
     //起始点到中点
     [line moveToPoint:originPoint];
     [line addLineToPoint:controlPoint1];

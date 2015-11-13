@@ -11,10 +11,10 @@
 #import "LDJingdongRefreshHeaderView.h"
 #import "UIScrollView+LDRefresh.h"
 
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenWidth  [UIScreen  mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-#define FirstTableColor [UIColor colorWithRed:119/255.0 green:210/255.0 blue:197/255.0 alpha:1.0]
+#define FirstTableColor  [UIColor colorWithRed:119/255.0 green:210/255.0 blue:197/255.0 alpha:1.0]
 #define SecondTableColor [UIColor colorWithRed:30/255.0 green:171/255.0 blue:201/255.0 alpha:1.0]
 
 @interface JingdongRefreshDemoController ()
@@ -40,25 +40,25 @@
     self.title = @"FirstTableView";
     
     self.firstTableView = ({
-        UITableView *tableView = [[UITableView alloc] init];
-        tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        tableView.delegate = (id<UITableViewDelegate>)self;
-        tableView.dataSource = (id<UITableViewDataSource>)self;
-        tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        UITableView *tableView                 = [[UITableView alloc] init];
+        tableView.backgroundColor              = [UIColor groupTableViewBackgroundColor];
+        tableView.delegate                     = (id<UITableViewDelegate>)self;
+        tableView.dataSource                   = (id<UITableViewDataSource>)self;
+        tableView.separatorStyle               = UITableViewCellSelectionStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
         
-        tableView.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64);
+        tableView.frame        = CGRectMake(0, 64, kScreenWidth, kScreenHeight - 64);
         tableView.contentInset = UIEdgeInsetsMake(0, 0, LDRefreshFooterHeight, 0);
         tableView;
     });
     
     self.secondTableView = ({
-        UITableView *tableView = [[UITableView alloc] init];
-        tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        tableView.delegate = (id<UITableViewDelegate>)self;
-        tableView.dataSource = (id<UITableViewDataSource>)self;
-        tableView.separatorStyle = UITableViewCellSelectionStyleNone;
+        UITableView *tableView                 = [[UITableView alloc] init];
+        tableView.backgroundColor              = [UIColor groupTableViewBackgroundColor];
+        tableView.delegate                     = (id<UITableViewDelegate>)self;
+        tableView.dataSource                   = (id<UITableViewDataSource>)self;
+        tableView.separatorStyle               = UITableViewCellSelectionStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:tableView];
         
@@ -87,12 +87,12 @@
 - (void)refreshData {
     __weak __typeof(self)weakSelf = self;
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = weakSelf.secondTableView.frame;
-        frame.origin.y = 64;
-        weakSelf.firstTableView.frame = frame;
-        
-        frame = weakSelf.secondTableView.frame;
-        frame.origin.y = kScreenHeight;
+        CGRect frame                   = weakSelf.secondTableView.frame;
+        frame.origin.y                 = 64;
+        weakSelf.firstTableView.frame  = frame;
+
+        frame                          = weakSelf.secondTableView.frame;
+        frame.origin.y                 = kScreenHeight;
         weakSelf.secondTableView.frame = frame;
     } completion:^(BOOL finished) {
         weakSelf.title = @"FirstTableView";
@@ -104,12 +104,12 @@
 - (void)loadMoreData {
     __weak __typeof(self)weakSelf = self;
     [UIView animateWithDuration:0.5 animations:^{
-        CGRect frame = weakSelf.firstTableView.frame;
-        frame.origin.y = - (kScreenHeight - 64);
-        weakSelf.firstTableView.frame = frame;
-        
-        frame = weakSelf.secondTableView.frame;
-        frame.origin.y = 64;
+        CGRect frame                   = weakSelf.firstTableView.frame;
+        frame.origin.y                 = - (kScreenHeight - 64);
+        weakSelf.firstTableView.frame  = frame;
+
+        frame                          = weakSelf.secondTableView.frame;
+        frame.origin.y                 = 64;
         weakSelf.secondTableView.frame = frame;
     } completion:^(BOOL finished) {
         weakSelf.title = @"SecondTableView";
