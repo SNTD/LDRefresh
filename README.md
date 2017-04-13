@@ -30,7 +30,7 @@ GitHub 上下拉刷新项目代码已不少，为何还写LDRefresh呢？
 
 支持tableView，collectionView， webView 以及所有继承自scrollView的控件。
 
-具体使用查看Demo代码，刷新结束注意调用endRefresh！
+具体使用查看Demo代码，刷新结束注意调用endRefresh,并且在UIViewController的dealloc方法中移除绑定的refreshHeader，否则会有内存问题！
 
 ``` objective-c
 //下拉刷新
@@ -40,4 +40,10 @@ _tableView.refreshHeader = [_tableView addRefreshHeaderWithHandler:^ {
 //上拉加载更多
 _tableView.refreshFooter = [_tableView addRefreshFooterWithHandler:^ {
 }];
+
+//移除绑定的方法，防止内存问题
+-(void)dealloc {
+    [_tableView removeRefreshHeader];
+}
+
 ```
