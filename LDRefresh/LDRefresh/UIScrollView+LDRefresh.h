@@ -26,4 +26,7 @@ typedef void(^LDRefreshedHandler)(void);
 //For footer Extend
 - (LDRefreshFooterView *)addRefreshFooter:(LDRefreshFooterView *)refreshFooterView handler:(LDRefreshedHandler)refreshHandler;
 
+//去除内存泄漏，在dealloc方法中调用
+- (void)removeRefreshHeader;
+
 @end

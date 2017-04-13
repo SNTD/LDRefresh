@@ -28,6 +28,12 @@
 
 @implementation JingdongRefreshDemoController
 
+-(void)dealloc {
+    
+    [_firstTableView removeRefreshHeader];
+    [_secondTableView removeRefreshHeader];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

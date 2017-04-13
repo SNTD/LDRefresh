@@ -21,6 +21,11 @@
 
 @implementation WeiboRefreshDemoController
 
+-(void)dealloc {
+    
+    [_tableView removeRefreshHeader];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];

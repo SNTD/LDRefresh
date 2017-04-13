@@ -13,6 +13,11 @@
 
 @implementation UIScrollView (LDRefresh)
 
+- (void)removeRefreshHeader {
+    self.refreshHeader = nil;
+    self.refreshFooter = nil;
+}
+
 #pragma mark - refreshHeader
 static const char * LDRefreshHeaderViewKey = "LDRefreshHeaderViewKey";
 
@@ -37,7 +42,7 @@ static const char * LDRefreshHeaderViewKey = "LDRefreshHeaderViewKey";
 }
 
 - (LDRefreshHeaderView *)addRefreshHeader:(LDRefreshHeaderView *)refreshHeader handler:(LDRefreshedHandler)refreshHandler {
-    [refreshHeader setValue:refreshHandler forKey:@"refreshHandler"];
+    [refreshHeader setValue:[refreshHandler copy] forKey:@"refreshHandler"];
     [refreshHeader setValue:self forKey:@"scrollView"];
     return refreshHeader;
 }
@@ -66,7 +71,7 @@ static const char * LDRefreshFooterViewKey = "LDRefreshFooterViewKey";
 }
 
 - (LDRefreshFooterView *)addRefreshFooter:(LDRefreshFooterView *)refreshFooter handler:(LDRefreshedHandler)refreshHandler {
-    [refreshFooter setValue:refreshHandler forKey:@"refreshHandler"];
+    [refreshFooter setValue:[refreshHandler copy] forKey:@"refreshHandler"];
     [refreshFooter setValue:self forKey:@"scrollView"];
     return refreshFooter;
 }
