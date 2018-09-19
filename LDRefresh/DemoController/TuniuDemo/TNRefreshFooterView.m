@@ -15,9 +15,11 @@
 #define TextFont  [UIFont systemFontOfSize:12.0f]
 
 @interface TNRefreshFooterView ()
+
 @property (nonatomic, strong) UILabel *statusLab;
 @property (nonatomic, strong) TNActivityIndicator  *loadingIndicator;
 @property (nonatomic, strong) TNInjectionAnimation *injectionView;
+
 @end
 
 @implementation TNRefreshFooterView
